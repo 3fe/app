@@ -1,0 +1,33 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	/*width: 900px;*/
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 20px;
+}
+
+#data {
+	float: left;
+	margin: 50px;
+}
+
+#state {
+	float: left;
+	margin: 50px;
+}
+
+span {
+	font-size: 100% !important;
+}
+
+button.btn-primary {
+	float: left;
+}
+
+button.btn-info {
+	float: right;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BMI计算器</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+	<main class="container">
+		<div class="row">
+		<div id="data" class="col-lg-4 col-md-8 col-sm-12">
+				<div class="btn-group">
+					<label><input type="radio" name="mode" value="1" checked> 模式一</label> 
+					<label><input type="radio" name="mode" value="2"> 模式二 </label>
+					<label><input type="radio" name="mode" value="3"> 模式三 </label>
+				</div>
+				<br>
+				<br>
+				<form>
+				<div class="input-group">
+					<span class="input-group-addon">身高</span>
+					<input id="height" type="text" class="form-control">
+					<span class="input-group-addon">cm</span>
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon">体重</span>
+					<input id="weight" type="text" class="form-control">
+					<span class="input-group-addon">kg</span>
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="bmi_tag">BMI</span>
+					<input id="bmi" type="text" class="form-control" disabled>
+				</div>
+				<br>
+				<button onclick="calc()" class="btn btn-primary">开始计算</button>
+				<button type="reset" class="btn btn-info">重置数据</button>
+			</form>
+			</div>
+
+
+			<div id="state" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">BMI范围与身体状态</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table">
+						<tr>
+							<td>	
+								<span class="label label-default">偏瘦</span>
+							</td>
+							<td>BMI &lt; 18.5
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="label label-success">正常</span>
+							</td>
+							<td>18.5 <= BMI &lt; 24</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="label label-warning">超重</span>
+							</td>
+							<td>24 <= BMI &lt; 28</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="label label-danger">肥胖</span>
+							</td>
+							<td>BMI >= 28</td>
+						</tr>
+					</table>
+					<span></span>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<script type="text/javascript">
+
+		$("[type=radio]").bind("click", function() {
+			var mode = $("[type='radio']:checked").val();
+			if (mode == 1) {
+				$("#bmi").attr("disabled", "disabled");
+				$("#weight").removeAttr("disabled");
+				$("#height").removeAttr("disabled");
+			} else if (mode == 2) {
+				$("#weight").attr("disabled", "disabled");
+				$("#bmi").removeAttr("disabled");
+				$("#height").removeAttr("disabled");
+			} else if (mode == 3) {
+				$("#height").attr("disabled", "disabled");
+				$("#bmi").removeAttr("disabled");
+				$("#weight").removeAttr("disabled");
+			}
+		// attr("disabled", "true") 可以实现disabled
+		// 但attr("disabled", "false") 却不能取消disabled
+	});
+
+		function calc() {
+			var mode = $("[type='radio']:checked").val();
+			if (mode == 1) {
+				calc_bmi();
+			} else if (mode == 2) {
+				calc_wei();
+			} else if (mode == 3) {
+				calc_hei();
+			}
+			var bmi = $("#bmi").val();
+			switch_state(bmi);
+		}
+
+		function calc_bmi() {
+			$("#bmi_tag").css(state[0]);
+
+			var height = $("#height").val();	
+			var weight = $("#weight").val();	
+			height /= 100;
+			var bmi = (weight/(height*height)).toFixed(2);
+			$("#bmi").val(bmi);	
+		}
+
+		function calc_wei() {
+			var height = $("#height").val();	
+			var bmi = $("#bmi").val();	
+			height /= 100;
+			var weight = bmi*height*height;
+			$("#weight").val(weight.toFixed(2));
+
+		}
+
+		function calc_hei() {
+			var weight = $("#weight").val();
+			var bmi = $("#bmi").val();
+			var height = Math.sqrt(weight/bmi);
+			height *= 100;
+			$("#height").val(height.toFixed(1));
+		}
+
+		function switch_state(bmi) {
+			if (bmi < 18.5) {
+				$("#bmi_tag").css(state[1]);
+			} else if (bmi < 24) {
+				$("#bmi_tag").css(state[2]);
+			} else if (bmi < 28) {
+				$("#bmi_tag").css(state[3]);
+			} else {
+				$("#bmi_tag").css(state[4]);
+			}
+		}
+
+
+		var state = [
+		{
+			"background-color": "#eee",
+			"color": "#555"	
+		},
+		{
+			"background-color": "#777",
+			"color": "white"	
+		},
+		{
+			"background-color": "#5cb85c",
+			"color": "white"	
+		},
+		{
+			"background-color": "#f0ad4e",
+			"color": "white"	
+		},
+		{
+			"background-color": "#d9534f",
+			"color": "white"	
+		}
+		];
+	</script>
+</body>
+</html>
