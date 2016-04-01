@@ -15,7 +15,6 @@ body {
 
 #state {
 	float: left;
-	margin-left: 50px;
 }
 
 @media (max-width: 768px) {
