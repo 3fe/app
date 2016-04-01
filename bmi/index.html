@@ -3,7 +3,7 @@
 <head>
 	<title>BMI计算器</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" >
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" >
 	<link rel="stylesheet" href="http://libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.min.js"></script>
@@ -103,6 +103,10 @@
 		// attr("disabled", "true") 可以实现disabled
 		// 但attr("disabled", "false") 却不能取消disabled
 	});
+
+		$("[type=reset]").bind("click", function() {
+			$("#bmi_tag").css(state[0]);
+		});
 
 		function calc() {
 			var mode = $("[type='radio']:checked").val();
