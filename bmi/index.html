@@ -3,6 +3,7 @@
 <head>
 	<title>BMI计算器</title>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width" >
 	<link rel="stylesheet" href="http://libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.min.js"></script>
@@ -10,7 +11,7 @@
 <body>
 	<main class="container">
 		<div class="row">
-		<div id="data" class="col-lg-4 col-lg-offset-3 col-md-4 col-md-offset-3 col-sm-12">
+			<div id="data" class="col-lg-4 col-lg-offset-3 col-md-4 col-md-offset-3 col-sm-12">
 				<div class="btn-group">
 					<label><input type="radio" name="mode" value="1" checked> 模式一</label> 
 					<label><input type="radio" name="mode" value="2"> 模式二 </label>
@@ -19,62 +20,62 @@
 				<br>
 				<br>
 				<form>
-				<div class="input-group">
-					<span class="input-group-addon">身高</span>
-					<input id="height" type="text" class="form-control">
-					<span class="input-group-addon">cm</span>
-				</div>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon">体重</span>
-					<input id="weight" type="text" class="form-control">
-					<span class="input-group-addon">kg</span>
-				</div>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon" id="bmi_tag">BMI</span>
-					<input id="bmi" type="text" class="form-control" disabled>
-				</div>
-				<br>
-				<button onclick="calc()" class="btn btn-primary">开始计算</button>
-				<button type="reset" class="btn btn-info">重置数据</button>
-			</form>
+					<div class="input-group">
+						<span class="input-group-addon">身高</span>
+						<input id="height" type="text" class="form-control">
+						<span class="input-group-addon">cm</span>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon">体重</span>
+						<input id="weight" type="text" class="form-control">
+						<span class="input-group-addon">kg</span>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon" id="bmi_tag">BMI</span>
+						<input id="bmi" type="text" class="form-control" disabled>
+					</div>
+					<br>
+					<button onclick="calc()" class="btn btn-primary">开始计算</button>
+					<button type="reset" class="btn btn-info">重置数据</button>
+				</form>
 			</div>
 
-
-			<div id="state" class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">BMI范围与身体状态</h3>
-				</div>
-				<div class="panel-body">
-					<table class="table">
-						<tr>
-							<td>	
-								<span class="label label-default">偏瘦</span>
-							</td>
-							<td>BMI &lt; 18.5
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span class="label label-success">正常</span>
-							</td>
-							<td>18.5 <= BMI &lt; 24</td>
-						</tr>
-						<tr>
-							<td>
-								<span class="label label-warning">超重</span>
-							</td>
-							<td>24 <= BMI &lt; 28</td>
-						</tr>
-						<tr>
-							<td>
-								<span class="label label-danger">肥胖</span>
-							</td>
-							<td>BMI >= 28</td>
-						</tr>
-					</table>
-					<span></span>
+			<div id="state" class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">BMI范围与身体状态</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table">
+							<tr>
+								<td>	
+									<span class="label label-default">偏瘦</span>
+								</td>
+								<td>BMI &lt; 18.5
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="label label-success">正常</span>
+								</td>
+								<td>18.5 <= BMI &lt; 24</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="label label-warning">超重</span>
+								</td>
+								<td>24 <= BMI &lt; 28</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="label label-danger">肥胖</span>
+								</td>
+								<td>BMI >= 28</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
