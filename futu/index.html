@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width" />
+
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<style type="text/css">
+		.item {
+
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<td>
+					<input type="radio" id="package" name="package" value="old" checked /> 旧套餐
+					<input type="radio" id="package" name="package" value="new1" /> 新套餐一
+					<input type="radio" id="package" name="package" value="new2" /> 新套餐二
+				</td>
+			</tr>
+			<tr>
+				<td>股票单价</td>
+				<td><input type="" id="price" name=""></td>
+			</tr>
+			<tr>
+				<td>数量</td>
+				<td><input type="" id="num" name="" value="100"></td>
+			</tr>
+			<tr>
+				<td>股票总价</td>
+				<td><input type="" id="stock" name=""></td>
+			</tr>
+			<tr>
+				<td>交易费用</td>
+				<td><input type="" id="other" name="" value="0"></td>
+			</tr>
+			<tr>
+				<td>合计(HKD)</td>
+				<td><input type="" id="sum" name=""></td>
+			</tr>
+			<tr>
+				<td>合计(CNY)</td>
+				<td><input type="" id="sum_cny" name=""></td>
+			</tr>
+			<tr>
+				<td><input type="button" id="btn" name="" value="计算"></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" id="no_com" name="no_com" value="yes" checked /> 免佣
+					<input type="radio" id="no_com" name="no_com" value="no" /> 不免
+			    </td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" id="order" name="order" value="buy"  checked/> 买入
+					<input type="radio" id="order" name="order" value="sell" /> 卖出
+			    </td>
+			</tr>
+		</table>
+		<table id="futu" class="table">
+			<tr>
+				<td>类型</td>
+				<td>费率</td>
+				<td>最低费用</td>
+				<td>最高费用</td>
+				<td>实收费用</td>
+				<td>收费方</td>
+			</tr>
+			<tr id="commission" class="item">
+				<td>佣金</td>
+				<td><input type="text" id="rate" title="0.03%" value="0.0003" disabled></td>
+				<td><input type="" id="min" value="3" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name=""></td>
+				<td>富途证券</td>
+			</tr>
+			<tr id="platform_cost" class="item">
+				<td>平台使用费</td>
+				<td><input type="" id="rate" title="固定" value="0" disabled></td>
+				<td><input type="" id="min" value="15" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name="" value="15" disabled></td>
+				<td>富途证券</td>
+			</tr>
+			<tr id="system_cost" class="item">
+				<td>交易系统使用费</td>
+				<td><input type="" id="rate" title="固定" value="0" disabled></td>
+				<td><input type="" id="min" value="0.5" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name="" value="" disabled></td>
+				<td>香港结算所</td>
+			</tr>
+			<tr id="transfer_fee" class="item">
+				<td>交收费</td>
+				<td><input type="" id="rate" title="0.005%" value="0.00002" disabled></td>
+				<td><input type="" id="min" value="5.5" disabled></td>
+				<td><input type="" id="max" value="200" disabled></td>
+				<td><input type="" id="amount" name="" value="" disabled></td>
+				<td>香港结算所</td>
+			</tr>
+			<tr id="stamp_tax" class="item">
+				<td>印花税</td>
+				<td><input type="" id="rate" title="0.1%" value="0.001" disabled></td>
+				<td><input type="" id="min" value="1" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name="" value="" disabled></td>
+				<td>香港政府</td>
+			</tr>
+			<tr id="transaction_fee" class="item">
+				<td>交易费</td>
+				<td><input type="" id="rate" title="0.005%" value="0.00005" disabled></td>
+				<td><input type="" id="min" value="0.01" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name="" value="" diabled></td>
+				<td>香港交易所</td>
+			</tr>
+			<tr id="transaction_levy" class="item">
+				<td>交易征费</td>
+				<td><input type="" id="rate" title="0.0027%" value="0.000027" disabled></td>
+				<td><input type="" id="min" value="0.01" disabled></td>
+				<td><input type="" id="max" value="-" disabled></td>
+				<td><input type="" id="amount" name="" value="" diabled></td>
+				<td>香港证监会</td>
+			</tr>
+		</table>
+	</form>
+
+<script type="text/javascript">
+	function sheru(digit) {
+		if ((digit * 1000) % 10 == 5) {
+			digit = Math.ceil(digit*100)/100;
+		} else {
+			digit = Math.round(digit*100)/100;
+		}
+		
+		return digit;
+	}
+
+	$('#btn').click( function() {
+		var price = numeral($('#price').val());
+		var num   = parseInt($('#num').val());
+		var stock = price.multiply(num);
+		var dif = stock.difference(100);
+		var stock_fee = stock.value();
+		console.log(stock.value());
+        console.log(price.value());
+        var other_fee = numeral(0);
+		$('.item').each(function() {
+			var fee = stock_fee;
+
+			var item = $(this).children();
+			var rate= item.children('#rate').val();
+			var min = item.children('#min').val();
+			var max = item.children('#max').val();
+            //console.log(numeral(rate).value());
+			var amount = numeral(fee).multiply(rate);
+			console.log(this.id);
+			console.log(amount.value());
+			var amt = amount.value();
+			if (amt < parseFloat(min)) {
+				amt = parseFloat(min);
+			}
+			if (max != '-' && amt > parseFloat(max))
+			{
+				amt = parseFloat(max);
+			}
+
+			amt = sheru(amt); 
+			if (this.id == 'commission' && $('#no_com').val() == 'yes') {
+				amt = 0;
+			} else if (this.id == 'stamp_tax') {
+				amt = Math.ceil(amt);
+			} else if (this.id == 'platform_cost' && $('#package:checked').val() == 'old') {
+				amt = 0;
+			} else if (this.id == 'system_cost' && $('#package:checked').val() == 'old') {
+				amt = 0;
+			} 
+			item.children('#amount').val(amt);
+			console.log($('#order:checked').val())
+			other_fee.add(amt);
+			
+		});
+
+		
+		$('#stock').val(stock_fee);
+		$('#other').val(other_fee.value());
+		if ($('#order:checked').val() == 'sell') {
+			var sum = stock_fee - other_fee.value();
+		} else {
+			var sum = stock_fee + other_fee.value();
+		}
+		$('#sum').val(sum);
+
+		$.ajax({
+		    url:'https://api.fixer.io/latest',
+		    type:'GET', //POST
+		    async:true,    //或false,是否异步
+		    data:{
+		        base:'HKD',
+		        symbols:'CNY'
+		    },
+		    success:function(data) {
+		    	var exchange_rate = data['rates']['CNY'];
+		    	console.log(data['rates']['CNY']);
+		    	var sum_cny = numeral(sum).multiply(exchange_rate).value();
+		    	
+		    	$('#sum_cny').val(sum_cny.toFixed(2));
+		    }
+		});
+	});
+	
+</script>
+</body>
+</html>
